@@ -630,6 +630,7 @@ public class MainWindow extends javax.swing.JFrame {
                          
                          """);
         TextDispName.setText("");
+        resetButtons();
     }//GEN-LAST:event_ButtonClearDispActionPerformed
 
     private void ButtonDispActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonDispActionPerformed
@@ -814,6 +815,7 @@ public class MainWindow extends javax.swing.JFrame {
         SpinnerWriteMoon.setEnabled(true);
         TextWriteOrbit.setEnabled(false);
         TextWriteTemp.setEnabled(true);
+        resetButtons();
     }//GEN-LAST:event_ButtonWriteClearActionPerformed
 
     private void ButtonWriteConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonWriteConfirmActionPerformed
