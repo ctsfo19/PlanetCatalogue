@@ -230,16 +230,6 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel1" max="32767" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="ButtonWriteClear" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="ButtonWriteAdd" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="ButtonWriteConfirm" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="ButtonDelete" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="40" max="32767" attributes="0"/>
-                      </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
@@ -271,6 +261,21 @@
                               <Component id="TextWriteParent" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="ExitEdit" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="ButtonWriteClear" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="ButtonWriteAdd" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="ButtonWriteConfirm" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="ButtonDelete" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="40" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -341,7 +346,9 @@
                           <Component id="ButtonDelete" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="82" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="ExitEdit" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="39" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -361,6 +368,7 @@
                 <StringItem index="2" value="Moon"/>
               </StringArray>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Choose object type"/>
           </Properties>
           <Events>
             <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="ChooseWriteTypeItemStateChanged"/>
@@ -378,6 +386,7 @@
         <Component class="javax.swing.JFormattedTextField" name="TextWriteName">
           <Properties>
             <Property name="text" type="java.lang.String" value="NoName"/>
+            <Property name="toolTipText" type="java.lang.String" value="Enter object name"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextWriteNameActionPerformed"/>
@@ -394,7 +403,7 @@
               <Format format="#0.00" subtype="-1" type="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="0"/>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
+            <Property name="toolTipText" type="java.lang.String" value="Enter object radius in kilometres (decimal value)"/>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
               <Color id="Text Cursor"/>
             </Property>
@@ -414,6 +423,7 @@
               <Format format="0.00" subtype="-1" type="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="0"/>
+            <Property name="toolTipText" type="java.lang.String" value="Enter object&apos;s mass in kilogrammes (decimal value)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="LabelWriteTest">
@@ -427,6 +437,7 @@
               <Format format="0.00" subtype="-1" type="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="0"/>
+            <Property name="toolTipText" type="java.lang.String" value="For object of type Sun, enter temperature in degrees centigrade (decimal value)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="LabelWriteOrbit">
@@ -440,6 +451,7 @@
               <Format format="0.00" subtype="-1" type="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="0"/>
+            <Property name="toolTipText" type="java.lang.String" value="Enter object&apos;s orbit radius in kilometres (decimal value)"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="LabelPeriodWrite">
@@ -453,6 +465,7 @@
               <Format format="0" subtype="-1" type="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="0"/>
+            <Property name="toolTipText" type="java.lang.String" value="Enter revolution period in days (integer value)"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TextWritePeriodActionPerformed"/>
@@ -474,9 +487,13 @@
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="When creating an object you can create its satellites - choose number here"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="TextWriteSatNames">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Enter your object&apos;s satellites&apos; names separated with commas"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="LabelWriteNames">
           <Properties>
@@ -521,6 +538,17 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="TextWriteParent">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="Enter an existing parent&apos;s name: Sun&apos;s for a Planet, Planet&apos;s for a Moon"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="ExitEdit">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Exit edit mode"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ExitEditActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

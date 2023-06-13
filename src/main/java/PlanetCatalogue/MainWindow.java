@@ -55,6 +55,7 @@ public class MainWindow extends javax.swing.JFrame {
     public List<String> moonItem = new ArrayList<>();
     public List<String> currentList = new ArrayList<>();
     public String list = new String();
+    public boolean edit = false;
     //</editor-fold>
     
     public void retrieveFileContent(){ //<editor-fold desc="retrieves data from file and stores it to containers">
@@ -170,11 +171,12 @@ public class MainWindow extends javax.swing.JFrame {
     public void resetButtons(){
         TextCurrentList.setText(list);
         ButtonWriteAdd.setEnabled(true);
-        ButtonDelete.setEnabled(true);
-        ChooseWriteType.setEnabled(true);
-        SpinnerWriteMoon.setEnabled(true);
-        TextWriteSatNames.setEnabled(true);
-        TextWriteTemp.setEnabled(true);
+        ButtonDelete.setEnabled(edit);
+        ChooseWriteType.setEnabled(!edit);
+        SpinnerWriteMoon.setEnabled(!edit);
+        TextWriteSatNames.setEnabled(!edit);
+        boolean temp = (ChooseWriteType.getSelectedIndex() == 0);
+        TextWriteTemp.setEnabled(temp);
     }
     
     /**<editor-fold desc="who knows what that does">
@@ -222,6 +224,7 @@ public class MainWindow extends javax.swing.JFrame {
         ButtonDelete = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         TextWriteParent = new javax.swing.JTextField();
+        ExitEdit = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TextDisp = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -312,6 +315,7 @@ public class MainWindow extends javax.swing.JFrame {
         LabelWriteType.setText("Object type");
 
         ChooseWriteType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sun", "Planet", "Moon" }));
+        ChooseWriteType.setToolTipText("Choose object type");
         ChooseWriteType.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 ChooseWriteTypeItemStateChanged(evt);
@@ -326,6 +330,7 @@ public class MainWindow extends javax.swing.JFrame {
         LabelWriteName.setText("Name");
 
         TextWriteName.setText("NoName");
+        TextWriteName.setToolTipText("Enter object name");
         TextWriteName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextWriteNameActionPerformed(evt);
@@ -336,7 +341,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         TextWriteRadius.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         TextWriteRadius.setText("0");
-        TextWriteRadius.setToolTipText("");
+        TextWriteRadius.setToolTipText("Enter object radius in kilometres (decimal value)");
         TextWriteRadius.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         TextWriteRadius.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -348,21 +353,25 @@ public class MainWindow extends javax.swing.JFrame {
 
         TextWriteMass.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("0.00"))));
         TextWriteMass.setText("0");
+        TextWriteMass.setToolTipText("Enter object's mass in kilogrammes (decimal value)");
 
         LabelWriteTest.setText("Surface temp [°C]");
 
         TextWriteTemp.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("0.00"))));
         TextWriteTemp.setText("0");
+        TextWriteTemp.setToolTipText("For object of type Sun, enter temperature in degrees centigrade (decimal value)");
 
         LabelWriteOrbit.setText("Orbit radius [km]");
 
         TextWriteOrbit.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("0.00"))));
         TextWriteOrbit.setText("0");
+        TextWriteOrbit.setToolTipText("Enter object's orbit radius in kilometres (decimal value)");
 
         LabelPeriodWrite.setText("Period [days]");
 
         TextWritePeriod.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("0"))));
         TextWritePeriod.setText("0");
+        TextWritePeriod.setToolTipText("Enter revolution period in days (integer value)");
         TextWritePeriod.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextWritePeriodActionPerformed(evt);
@@ -375,6 +384,9 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         SpinnerWriteMoon.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
+        SpinnerWriteMoon.setToolTipText("When creating an object you can create its satellites - choose number here");
+
+        TextWriteSatNames.setToolTipText("Enter your object's satellites' names separated with commas");
 
         LabelWriteNames.setText("Satellite names");
 
@@ -408,6 +420,15 @@ public class MainWindow extends javax.swing.JFrame {
 
         jLabel4.setText("Parent");
 
+        TextWriteParent.setToolTipText("Enter an existing parent's name: Sun's for a Planet, Planet's for a Moon");
+
+        ExitEdit.setText("Exit edit mode");
+        ExitEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ExitEditActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelWriteLayout = new javax.swing.GroupLayout(PanelWrite);
         PanelWrite.setLayout(PanelWriteLayout);
         PanelWriteLayout.setHorizontalGroup(
@@ -416,15 +437,6 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(PanelWriteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(PanelWriteLayout.createSequentialGroup()
-                        .addComponent(ButtonWriteClear)
-                        .addGap(18, 18, 18)
-                        .addComponent(ButtonWriteAdd)
-                        .addGap(18, 18, 18)
-                        .addComponent(ButtonWriteConfirm)
-                        .addGap(18, 18, 18)
-                        .addComponent(ButtonDelete)
-                        .addGap(0, 40, Short.MAX_VALUE))
                     .addGroup(PanelWriteLayout.createSequentialGroup()
                         .addGroup(PanelWriteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(PanelWriteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -451,7 +463,19 @@ public class MainWindow extends javax.swing.JFrame {
                             .addComponent(TextWriteOrbit, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(TextWriteParent))
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(PanelWriteLayout.createSequentialGroup()
+                        .addGroup(PanelWriteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(ExitEdit)
+                            .addGroup(PanelWriteLayout.createSequentialGroup()
+                                .addComponent(ButtonWriteClear)
+                                .addGap(18, 18, 18)
+                                .addComponent(ButtonWriteAdd)
+                                .addGap(18, 18, 18)
+                                .addComponent(ButtonWriteConfirm)))
+                        .addGap(18, 18, 18)
+                        .addComponent(ButtonDelete)
+                        .addGap(0, 40, Short.MAX_VALUE))))
         );
         PanelWriteLayout.setVerticalGroup(
             PanelWriteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -508,7 +532,9 @@ public class MainWindow extends javax.swing.JFrame {
                     .addGroup(PanelWriteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(ButtonWriteConfirm)
                         .addComponent(ButtonDelete)))
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(ExitEdit)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         TextDisp.setEditable(false);
@@ -934,6 +960,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
         refreshList();
         ChooseWriteType.setEnabled(true);
+        resetButtons();
 //        ButtonWriteConfirm.setEnabled(false);
 //        ButtonDelete.setEnabled(false);
     }//GEN-LAST:event_ButtonWriteConfirmActionPerformed
@@ -995,6 +1022,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void ButtonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonEditActionPerformed
         // TODO add your handling code here:
         
+        edit = true;
         refreshList();
         
         switch(ChooseTypeDisp.getSelectedIndex()){
@@ -1114,6 +1142,14 @@ public class MainWindow extends javax.swing.JFrame {
         ButtonDelete.setEnabled(false);
         
     }//GEN-LAST:event_ButtonDeleteActionPerformed
+
+    private void ExitEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitEditActionPerformed
+        // TODO add your handling code here:
+        edit = false;
+        ButtonWriteConfirm.setEnabled(edit);
+        ButtonDelete.setEnabled(edit);
+        resetButtons();
+    }//GEN-LAST:event_ExitEditActionPerformed
     
     /**
      * @param args the command line arguments
@@ -1161,6 +1197,7 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JButton ButtonWriteConfirm;
     private javax.swing.JComboBox<String> ChooseTypeDisp;
     private javax.swing.JComboBox<String> ChooseWriteType;
+    private javax.swing.JButton ExitEdit;
     private javax.swing.JLabel LabelList;
     private javax.swing.JLabel LabelPeriodWrite;
     private javax.swing.JLabel LabelType;
