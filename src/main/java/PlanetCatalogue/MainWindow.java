@@ -678,6 +678,14 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
         switch(ChooseWriteType.getSelectedIndex()){
             case 0 -> {
+                //check whether name occurs only once
+                int count = 0;
+                for(Sun obj : suns){
+                    if(obj.getName() == null ? TextWriteName.getText() == null : obj.getName().equals(TextWriteName.getText())){
+                        count++;
+                    }
+                }
+                if(count == 1){
                 Sun newSun = new Sun(TextWriteName.getText());
                 newSun.setRadius(Double.parseDouble(TextWriteRadius.getText()));
                 newSun.setMass(Double.parseDouble(TextWriteMass.getText()));
@@ -689,8 +697,22 @@ public class MainWindow extends javax.swing.JFrame {
                 newSun.setSatNum(value);
                 newSun.setSatellites(value,TextWriteSatNames.getText());
                 container.addObject(newSun);
+                }else{
+                    JOptionPane.showMessageDialog(null, 
+        "You tried to save a Sun under a pre-existing name.\nEnter a different name and try again.", "Warning!",
+        JOptionPane.WARNING_MESSAGE);
+                }
             }
             case 1 -> {
+                
+                //check whether name occurs only once
+                int count = 0;
+                for(Planet obj : planets){
+                    if(obj.getName() == null ? TextWriteName.getText() == null : obj.getName().equals(TextWriteName.getText())){
+                        count++;
+                    }
+                }
+                
                 boolean exists = false;
                 Sun parent = new Sun();
                 for(Sun obj : suns){
@@ -701,6 +723,7 @@ public class MainWindow extends javax.swing.JFrame {
                     }
                 }
                 if(exists){
+                    if(count == 1){
                 Planet newPlanet = new Planet(TextWriteName.getText(),parent);
                 newPlanet.setParent(parent);
                 parent.addSatellite(newPlanet);
@@ -715,6 +738,11 @@ public class MainWindow extends javax.swing.JFrame {
                 newPlanet.setMoon(value);
                 newPlanet.setSatellites(value,TextWriteSatNames.getText());
                 container.addObject(newPlanet);
+                    }else{
+                        JOptionPane.showMessageDialog(null, 
+        "You tried to save a Planet with a pre-existing name.\nEnter a different name and try again.", "Warning!",
+        JOptionPane.WARNING_MESSAGE);
+                    }
                 }else{
                     JOptionPane.showMessageDialog(null, 
         "You tried to create a Planet with no existing parent.\nEnter an existing Sun's name and try again.", "Warning!",
@@ -722,6 +750,15 @@ public class MainWindow extends javax.swing.JFrame {
                 }
             }
             case 2 -> {
+                
+                //check whether name occurs only once
+                int count = 0;
+                for(Moon obj : moons){
+                    if(obj.getName() == null ? TextWriteName.getText() == null : obj.getName().equals(TextWriteName.getText())){
+                        count++;
+                    }
+                }
+                
                 boolean exists = false;
                 Planet parent = new Planet();
                 for(Planet obj : planets){
@@ -732,6 +769,7 @@ public class MainWindow extends javax.swing.JFrame {
                     }
                 }
                 if(exists){
+                    if(count == 1){
                 Moon newMoon = new Moon(TextWriteName.getText(),parent);
                 newMoon.setParent(parent);
                 parent.addSatellite(newMoon);
@@ -740,6 +778,11 @@ public class MainWindow extends javax.swing.JFrame {
                 newMoon.setOrbit(Double.parseDouble(TextWriteOrbit.getText()));
                 newMoon.setPeriod(Integer.parseInt(TextWritePeriod.getText()));
                 container.addObject(newMoon);
+                    }else{
+                        JOptionPane.showMessageDialog(null, 
+        "You tried to save a Moon with a pre-existing name.\nEnter a different name and try again.", "Warning!",
+        JOptionPane.WARNING_MESSAGE);
+                    }
                 }else{
                     JOptionPane.showMessageDialog(null, 
         "You tried to create a Moon with no existing parent.\nEnter an existing Planet's name and try again.", "Warning!",
