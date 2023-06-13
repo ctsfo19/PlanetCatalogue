@@ -685,7 +685,7 @@ public class MainWindow extends javax.swing.JFrame {
                         count++;
                     }
                 }
-                if(count == 1){
+                if(count < 1){
                 Sun newSun = new Sun(TextWriteName.getText());
                 newSun.setRadius(Double.parseDouble(TextWriteRadius.getText()));
                 newSun.setMass(Double.parseDouble(TextWriteMass.getText()));
@@ -723,7 +723,7 @@ public class MainWindow extends javax.swing.JFrame {
                     }
                 }
                 if(exists){
-                    if(count == 1){
+                    if(count < 1){
                 Planet newPlanet = new Planet(TextWriteName.getText(),parent);
                 newPlanet.setParent(parent);
                 parent.addSatellite(newPlanet);
@@ -769,7 +769,7 @@ public class MainWindow extends javax.swing.JFrame {
                     }
                 }
                 if(exists){
-                    if(count == 1){
+                    if(count < 1){
                 Moon newMoon = new Moon(TextWriteName.getText(),parent);
                 newMoon.setParent(parent);
                 parent.addSatellite(newMoon);
