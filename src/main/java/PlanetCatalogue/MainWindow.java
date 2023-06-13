@@ -162,6 +162,16 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//</editor-fold>
     
+    public void resetButtons(){
+        TextCurrentList.setText(list);
+        ButtonWriteAdd.setEnabled(true);
+        ButtonDelete.setEnabled(true);
+        ChooseWriteType.setEnabled(true);
+        SpinnerWriteMoon.setEnabled(true);
+        TextWriteSatNames.setEnabled(true);
+        TextWriteTemp.setEnabled(true);
+    }
+    
     /**<editor-fold desc="who knows what that does">
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -763,17 +773,41 @@ public class MainWindow extends javax.swing.JFrame {
         switch(ChooseWriteType.getSelectedIndex()){
             case 0 -> {
                 //Suns
+                
+                //check whether name occurs only once
+                int count = 0;
                 for(Sun obj : suns){
-                    if(obj.getName() == null ? TextDispName.getText() == null : obj.getName().equals(TextDispName.getText())){
+                    if(obj.getName() == null ? TextWriteName.getText() == null : obj.getName().equals(TextWriteName.getText())){
+                        count++;
+                    }
+                }
+                if(count == 1){
+                for(Sun obj : suns){
+                    if((obj.getName() == null ? TextDispName.getText() == null : obj.getName().equals(TextDispName.getText())) && count == 1){
                         obj.setName(TextWriteName.getText());
                         obj.setMass(Double.parseDouble(TextWriteMass.getText()));
                         obj.setRadius(Double.parseDouble(TextWriteRadius.getText()));
                         obj.setTemp(Double.parseDouble(TextWriteTemp.getText()));
                     } 
                 }
+                }else{
+                    JOptionPane.showMessageDialog(null, 
+        "You tried to save a Sun under a pre-existing name.\nEnter a different name and try again.", "Warning!",
+        JOptionPane.WARNING_MESSAGE);
+                }
             }
             case 1 -> {
                 //Planets
+                
+                //check whether name occurs only once
+                int count = 0;
+                for(Planet obj : planets){
+                    if(obj.getName() == null ? TextWriteName.getText() == null : obj.getName().equals(TextWriteName.getText())){
+                        count++;
+                    }
+                }
+                
+                //check whether parent existent
                 boolean exists = false;
                 Sun parent = new Sun();
                 for(Sun obj : suns){
@@ -784,6 +818,7 @@ public class MainWindow extends javax.swing.JFrame {
                     }
                 }
                 if(exists){
+                    if(count == 1){
                 for(Planet obj : planets){
                     if(obj.getName() == null ? TextDispName.getText() == null : obj.getName().equals(TextDispName.getText())){
                         obj.setName(TextWriteName.getText());
@@ -794,6 +829,11 @@ public class MainWindow extends javax.swing.JFrame {
                         obj.setOrbit(Double.parseDouble(TextWriteOrbit.getText()));
                     }
                 }
+                    }else{
+                        JOptionPane.showMessageDialog(null, 
+        "You tried to save a Planet with a pre-existing name.\nEnter a different name and try again.", "Warning!",
+        JOptionPane.WARNING_MESSAGE);
+                    }
                 }else{
                     JOptionPane.showMessageDialog(null, 
         "You tried to save a Planet with non-existent parent.\nEnter an existing Sun's name and try again.", "Warning!",
@@ -802,6 +842,14 @@ public class MainWindow extends javax.swing.JFrame {
             }
             case 2 -> {
                 //Moons
+                
+                //check whether name occurs only once
+                int count = 0;
+                for(Moon obj : moons){
+                    if(obj.getName() == null ? TextWriteName.getText() == null : obj.getName().equals(TextWriteName.getText())){
+                        count++;
+                    }
+                }
                 boolean exists = false;
                 Planet parent = new Planet();
                 for(Planet obj : planets){
@@ -812,6 +860,7 @@ public class MainWindow extends javax.swing.JFrame {
                     }
                 }
                 if(exists){
+                    if(count == 1){
                 for(Moon obj : moons){
                     if(obj.getName() == null ? TextDispName.getText() == null : obj.getName().equals(TextDispName.getText())){
                         obj.setName(TextWriteName.getText());
@@ -821,6 +870,11 @@ public class MainWindow extends javax.swing.JFrame {
                         obj.setOrbit(Double.parseDouble(TextWriteOrbit.getText()));
                     }
                 }
+                    }else{
+                        JOptionPane.showMessageDialog(null, 
+        "You tried to save a Moon with a pre-existing name.\nEnter a different name and try again.", "Warning!",
+        JOptionPane.WARNING_MESSAGE);
+                    }
                 }else{
                     JOptionPane.showMessageDialog(null, 
         "You tried to save a Moon with non-existent parent.\nEnter an existing Planet's name and try again.", "Warning!",
@@ -830,8 +884,8 @@ public class MainWindow extends javax.swing.JFrame {
         }
         refreshList();
         ChooseWriteType.setEnabled(true);
-        ButtonWriteConfirm.setEnabled(false);
-        ButtonDelete.setEnabled(false);
+//        ButtonWriteConfirm.setEnabled(false);
+//        ButtonDelete.setEnabled(false);
     }//GEN-LAST:event_ButtonWriteConfirmActionPerformed
 //<editor-fold defaultstate="collapsed" desc=" Unused ActionPerformed ">
     private void TextWritePeriodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextWritePeriodActionPerformed
