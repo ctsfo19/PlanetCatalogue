@@ -103,18 +103,23 @@ public class MainWindow extends javax.swing.JFrame {
                 sunItem.add(((Sun) obj).getName());
                 for(Planet subj : ((Sun) obj).Satellites){
                     planets.add(subj);
+                    for(Moon moo : ((Planet)subj).Satellites){
+                        moons.add(moo);
+                    }
                 }
-            } else if (obj instanceof Planet) {
-                planets.add((Planet) obj);
-                planetItem.add(((Planet) obj).getName());
-                for(Moon subj : ((Planet) obj).Satellites){
-                    moons.add(subj);
-                }
-            } else if (obj instanceof Moon){
-                moons.add((Moon) obj);
-                moonItem.add(((Moon) obj).getName());
             }
         }
+//            } else if (obj instanceof Planet) {
+//                planets.add((Planet) obj);
+//                planetItem.add(((Planet) obj).getName());
+//                for(Moon subj : ((Planet) obj).Satellites){
+//                    moons.add(subj);
+//                }
+//            } else if (obj instanceof Moon){
+//                moons.add((Moon) obj);
+//                moonItem.add(((Moon) obj).getName());
+//            }
+//    }
         
         StringBuilder listSB = new StringBuilder();
         currentList.clear();
